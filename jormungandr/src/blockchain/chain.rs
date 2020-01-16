@@ -517,7 +517,7 @@ impl Blockchain {
         post_checked_header: PostCheckedHeader,
         block: Block,
     ) -> impl Future<Item = AppliedBlock, Error = Error> {
-        let mut storage = self.storage.clone();
+        let storage = self.storage.clone();
         self.apply_block(post_checked_header, &block)
             .and_then(move |block_ref| {
                 storage.put_block(block).then(|res| match res {
@@ -628,8 +628,8 @@ impl Blockchain {
         let block0_id = block0_header.hash();
 
         let self1 = self.clone();
-        let mut storage_store = self.storage.clone();
-        let mut storage_store_2 = self.storage.clone();
+        let storage_store = self.storage.clone();
+        let storage_store_2 = self.storage.clone();
 
         self.storage
             .block_exists(block0_id.clone())
